@@ -1,18 +1,16 @@
 const ARTIST = {
-    name: "Asier",
-    tagline: "Live-coded music, fully written and performed in the browser."
+  name: "Asier",
+  tagline: "Live-coded music, fully written and performed in the browser.",
 };
 
 const TRACKS = [
-    {
-        number: "01",
-        title: "Phase Drift",
-        year: "2026",
-        tags: ["first-strudel-song"],
-        description: 
-            "",
-        notes: "",
-        code: `setcpm(90/3)
+  {
+    number: "01",
+    title: "Phase Drift",
+    year: "2026",
+    tags: ["first-strudel-song"],
+    description: "",
+    code: `setcpm(90/3)
 
 // DATA 
 //@by Asier
@@ -75,151 +73,154 @@ $: every(6,
   .sound("triangle")
   .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
   .lpf("<600 800 900>")
-  .release("<0.1 0.2 0.15>")`
-    },
+  .release("<0.1 0.2 0.15>")`,
+  },
 ];
 
 const ABOUT = {
-    eyebrow: "About",
-    heading: "On writting music as code",
-    paragraphs:  [
-        "Hi! My name is Asier I'm a 15 years old teenager who loves everything related to programming and this time, through HackClub, I got into Ariam an awesome YSWS where I had to create songs with Strudel.cc"
-    ],
+  eyebrow: "About",
+  heading: "On writing music as code",
+  paragraphs: [
+    "Hi! My name is Asier, I'm a 15 year old teenager who loves everything related to programming, and this time, through Hack Club, I got into Aria, an awesome YSWS where I had to create songs with Strudel.cc. It has definetely been a greate challenge to work on this since my experience with music is null, however, isn't life anything but challenging you to push further? Well, compared to other my work won't seem anything spectacular, but I'm proud of what I acomplished for this YSWS.",
+  ],
 };
 
 const CONTACT = {
-    eyebrow: "Contact",
-    heading: "Get in touch",
-    links: [
-        {label: "Email", value: "asier.pernias@gmail.com", href: "mailto:asier.pernias@gmail.com"},
-        {label: "Instagram", value: "@asier_10_22"},
-    ],
+  eyebrow: "Contact",
+  heading: "Get in touch",
+  links: [
+    { label: "Email", value: "asier.pernias@gmail.com", href: "mailto:asier.pernias@gmail.com" },
+    { label: "Instagram", value: "@asier_10_22", href: "https://instagram.com/asier_10_22" },
+  ],
 };
 
 function strudelEmbedURL(code) {
-    const encoded = encodeURIComponent(code);
-    return `https://strudel.cc/#${encoded}`;
+  const bytes = new TextEncoder().encode(code);
+  let binary = "";
+  bytes.forEach((b) => (binary += String.fromCharCode(b)));
+  const base64 = btoa(binary);
+  return `https://strudel.cc/#${base64}`;
 }
 
-const slidesEL = document.getElementById("slides");
+const slidesEl = document.getElementById("slides");
 const dotsEl = document.getElementById("dots");
 const slideRefs = [];
 
 function addSlide(id, className, html) {
-    const section = document.createElement("section");
-    section.className = `slide ${className}`;
-    section.id = id;
-    section.innerHTML = `<div class="slide-inner"></div>${html}`;
-    slidesEL.appendChild(section);
-    slideRefs.push(section);
+  const section = document.createElement("section");
+  section.className = `slide ${className}`;
+  section.id = id;
+  section.innerHTML = `<div class="slide-inner">${html}</div>`;
+  slidesEl.appendChild(section);
+  slideRefs.push(section);
 }
 
 addSlide(
-    "intro",
-    "intro",
-    `
-    <p class="eyebrow">My work for Aria</p>
-    <h1>${ARTIST.name}<span class="cursor">&nbsp;</span></h1>
-    <p>${ARTIST.tagline}</p>
-    <p class="scroll-hint">Scroll to see more</p>
-    `
+  "intro",
+  "intro",
+  `
+  <p class="eyebrow">My work for Aria, a HackClub YSWS.</p>
+  <h1>${ARTIST.name}<span class="cursor">&nbsp;</span></h1>
+  <p>${ARTIST.tagline}</p>
+  <p class="scroll-hint">Scroll to see more</p>
+  `
 );
 
 TRACKS.forEach((track, i) => {
-    const url = track.embedUrl || strudelEmbedURL(track.code);
-    const alt = i % 2 === 1 ? "slide--alt": "";
-    addSlide(
-        `track-${track.number}`,
-        `track-slide ${alt}`,
-        `
-        <div class="track-grid">
-            <div class="track-info">
-                <p class="track-number">// ${track.number}</p>
-                <h2>${track.title}</h2>
-                <p class="track-meta">
-                    <span>${track.year}</span>
-                    ${track.tags.map((t) => `<span>${t}</span>`).join("")}
-                </p>
-                <p>${track.description}</p>
-            </div>
-            <div>
-                <div class="track-embed">
-                    <iframe
-                    src="${url}"
-                    loading="lazy"
-                    title="Strudel pattern for ${track.title}"
-                    allow="autoplay"
-                    ></iframe>
-                <p class="embed-caption">
-                Press play inside the player to listen · <a href="${url}" target="_blank" rel="noopener">open in strudel</a>
-                </p>
-                </div>
-            </div>
-            </div>
-        `
-    );
+  const url = track.embedUrl || strudelEmbedURL(track.code);
+  const alt = i % 2 === 1 ? "slide--alt" : "";
+  addSlide(
+    `track-${track.number}`,
+    `track-slide ${alt}`,
+    `
+    <div class="track-grid">
+      <div class="track-info">
+        <p class="track-number">// ${track.number}</p>
+        <h2>${track.title}</h2>
+        <p class="track-meta">
+          <span>${track.year}</span>
+          ${track.tags.map((t) => `<span>${t}</span>`).join("")}
+        </p>
+        <p>${track.description}</p>
+      </div>
+      <div>
+        <div class="track-embed">
+          <iframe
+            src="${url}"
+            loading="lazy"
+            title="Strudel pattern for ${track.title}"
+            allow="autoplay"
+          ></iframe>
+        </div>
+        <p class="embed-caption">
+          Press play inside the player to listen · <a href="${url}" target="_blank" rel="noopener">open in Strudel</a>
+        </p>
+      </div>
+    </div>
+    `
+  );
 });
 
-//About
-
 addSlide(
-    "about", 
-    "text-slide slide--alt",
-    `
-    <p class="eyebrow">${ABOUT.eyebrow}</p>
-    <h2>${ABOUT.heading}</h2>
-    ${ABOUT.paragraphs.map((p) => `<p>${p}</p>`).join("")}
-    `
+  "about",
+  "text-slide slide--alt",
+  `
+  <p class="eyebrow">${ABOUT.eyebrow}</p>
+  <h2>${ABOUT.heading}</h2>
+  ${ABOUT.paragraphs.map((p) => `<p>${p}</p>`).join("")}
+  `
 );
 
 addSlide(
-    "contact",
-    "text-slide",
-    `
-    <p class="eyebrow">${CONTACT.eyebrow}</p>
-    <u1 class="contact-list">
-       ${CONTACT.links
+  "contact",
+  "text-slide",
+  `
+  <p class="eyebrow">${CONTACT.eyebrow}</p>
+  <h2>${CONTACT.heading}</h2>
+  <ul class="contact-list">
+    ${CONTACT.links
       .map(
         (l) =>
           `<li><a href="${l.href}" target="_blank" rel="noopener"><span>${l.label}</span><small>${l.value}</small></a></li>`
       )
       .join("")}
-    </ul>
-    `
-)
+  </ul>
+  `
+);
 
 const observer = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            entry.target.classList.toggle("is-visible", entry.isIntersecting);
-        });
-    },
-    {threshold: 0.25}
+  (entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("is-visible", entry.isIntersecting);
+    });
+  },
+  { threshold: 0.25 }
 );
 
 slideRefs.forEach((s) => observer.observe(s));
 
 slideRefs.forEach((s, i) => {
-    const btn = document.createElement("button");
-    btn.addEventListener("click", () => {
-        s.scrollIntoView({behavior: "smooth"});
-    });
-    dotsEl.appendChild(btn);
+  const btn = document.createElement("button");
+  btn.setAttribute("aria-label", `Go to slide ${i + 1}`);
+  btn.addEventListener("click", () => {
+    s.scrollIntoView({ behavior: "smooth" });
+  });
+  dotsEl.appendChild(btn);
 });
 
 const dotButtons = Array.from(dotsEl.children);
 
 const activeObserver = new IntersectionObserver(
-    (entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const idx = slideRefs.indexOf(entry.target);
-                dotButtons.forEach((b) => b.classList.remove("active"));
-                if (dotButtons[idx]) dotButtons[idx].classList.add("active");
-            }
-        });
-    },
-    {threshold: 0.5}
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idx = slideRefs.indexOf(entry.target);
+        dotButtons.forEach((b) => b.classList.remove("active"));
+        if (dotButtons[idx]) dotButtons[idx].classList.add("active");
+      }
+    });
+  },
+  { threshold: 0.5 }
 );
 
 slideRefs.forEach((s) => activeObserver.observe(s));
