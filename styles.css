@@ -1,5 +1,5 @@
 :root{
-    --bg: #F2ADE4;
+    --bg: #F2EDE4;
     --bg-alt: #E8E1D4;
     --ink: #1C1A17;
     --ink-soft: #57534A;
@@ -11,9 +11,9 @@
     --sans: 'Inter', system-ui, sans-serif;
 }
 
-*[  box-sizing: border-box;] 
+*{  box-sizing: border-box }
 
-html[ scroll-behavior: smooth; ]
+html{ scroll-behavior: smooth; }
 
 body {
     margin: 0;
@@ -23,12 +23,12 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-@media [prefers-reduced-motion: reduce]{
-    html{scroll-behacvior: auto;}
+@media ( prefers-reduced-motion: reduce){
+    html{scroll-behavior: auto;}
     *{ transition: none !important; animation: none !important}
 }
 
-#slide{
+#slides{
     display: flex;
     flex-direction: column;
 }
@@ -68,7 +68,7 @@ body {
 .intro .eyebrow{
     font-family: var(--mono);
     font-size: 0.8rem;
-    letter-spacing: 0.14em
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink-soft);
     margin: 0 0 1.6rem 0;
@@ -79,7 +79,7 @@ body {
     font-weight: 700;
     font-size: clamp(2.4rem, 7vw, 5.6rem);
     line-height: 1.02;
-    margin: 0 0 1.6 rem 0;
+    margin: 0 0 1.6rem 0;
     letter-spacing: -0.01em;
 }
 
@@ -110,29 +110,29 @@ body {
     font-size: 0.75rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--ink-soft)
+    color: var(--ink-soft);
 }
 
 .track-grid{
     display: grid;
     grid-template-columns: 0.95fr 1.05fr;
-    gap: 5w;
+    gap: 5vw;
     align-items: start;
 }
 
-.track-info .track-number[
+.track-info .track-number{
     font-family: var(--mono);
     font-size: 0.85rem;
     color: var(--accent);
     margin: 0 0 1rem 0;
-]
+}
 
 .track-info h2{
     font-family: var(--mono);
     font-weight: 700;
     font-size: clamp(1.8rem, 3.4vw, 2.6rem);
     line-height: 1.1;
-    margin: 0 0 0 0.6rem 0;
+    margin: 0 0 0.6rem 0;
 }
 
 .track-meta{
@@ -143,7 +143,7 @@ body {
     letter-spacing: 0.02em;
 }
 
-.track-meta span:no(:last-child)::after{
+.track-meta span:not(:last-child)::after{
     content: "-";
     margin: 0 0.6em;
     color: var(--line);
@@ -177,7 +177,7 @@ body {
     font-size: 0.72rem;
     color: var(--ink-soft);
     margin-top: 0.9em;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.02em;
 }
 
 .embed-caption a{
@@ -271,7 +271,7 @@ body {
     background: transparent;
     padding: 0;
     cursor: pointer;
-    transition: background 0.25 ease, border-color 0.25s ease, transform 0.25s ease;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .dots button:hover{

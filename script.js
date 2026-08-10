@@ -6,12 +6,76 @@ const ARTIST = {
 const TRACKS = [
     {
         number: "01",
-        TITLE: "Phase Drift",
+        title: "Phase Drift",
         year: "2026",
         tags: ["first-strudel-song"],
         description: 
             "",
         notes: "",
+        code: `setcpm(90/3)
+
+// DATA 
+//@by Asier
+
+//Drums
+$: sound("- bd bd - bd bd bd bd")
+  .bank("bossdr220")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .lpf("<1000 800 800>")
+
+$: sound("sd - - sd - - sd ")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+
+$: sound("rim rim rim - rim rim rim -")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .lpf("300")
+
+$: every(3,
+    x => x.sound("hh - hh oh hh - hh oh"),
+    sound("hh hh hh - hh hh hh oh")
+      .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+      .lpf("200")
+  )
+  .gain("0.25")
+  .lpf("200")
+
+$: sound("cr - - - - - - -")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .attack("0.25")
+
+$: sound("bd bd - - bd bd - -")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .attack(0.3)
+
+//Bass
+
+$: note("a1 ~ a1 - a2 - a1 ~ a1 - a2 ~")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .sound("saw")
+  .lpf("300")
+  .legato(2)
+  .attack("0.2")
+  .release("0.8")
+
+$: note("a4 b4 c5 b4 e5 c5 ")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .sound("triangle")
+  .lpf("300")
+  .attack(0.5)
+
+//Lead
+
+$: every(6,
+    x => x.rev(),
+    every(3,
+      x => x.note("a3 c4 e4 d4 g3 e3 d3 a3"),
+      note("a3 a3 d4 e4 a3 d3 g3 e3")
+    )
+  )
+  .sound("triangle")
+  .gain("<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 0.8 0.6 0.3 0>")
+  .lpf("<600 800 900>")
+  .release("<0.1 0.2 0.15>")`
     },
 ];
 
@@ -34,25 +98,25 @@ const CONTACT = {
 
 function strudelEmbedURL(code) {
     const encoded = encodeURIComponent(code);
-    return 'https://strudel.cc/#${encoded}';
+    return `https://strudel.cc/#${encoded}`;
 }
 
 const slidesEL = document.getElementById("slides");
-const dotsEL = document.getElementById("dots");
+const dotsEl = document.getElementById("dots");
 const slideRefs = [];
 
 function addSlide(id, className, html) {
     const section = document.createElement("section");
     section.className = `slide ${className}`;
     section.id = id;
-    section.innerHTML = `<div class="slide-inner">${html}`;
+    section.innerHTML = `<div class="slide-inner"></div>${html}`;
     slidesEL.appendChild(section);
     slideRefs.push(section);
 }
 
 addSlide(
-    "Intro",
-    "Intro",
+    "intro",
+    "intro",
     `
     <p class="eyebrow">My work for Aria</p>
     <h1>${ARTIST.name}<span class="cursor">&nbsp;</span></h1>
@@ -62,8 +126,8 @@ addSlide(
 );
 
 TRACKS.forEach((track, i) => {
-    const url = track.emebedURL || strudelEmbedURL(track.code);
-    const alt = i % 2 === 1 ? "slide-alt": "";
+    const url = track.embedUrl || strudelEmbedURL(track.code);
+    const alt = i % 2 === 1 ? "slide--alt": "";
     addSlide(
         `track-${track.number}`,
         `track-slide ${alt}`,
@@ -81,7 +145,7 @@ TRACKS.forEach((track, i) => {
             <div>
                 <div class="track-embed">
                     <iframe
-                    src="$${url}"
+                    src="${url}"
                     loading="lazy"
                     title="Strudel pattern for ${track.title}"
                     allow="autoplay"
@@ -91,11 +155,22 @@ TRACKS.forEach((track, i) => {
                 </p>
                 </div>
             </div>
+            </div>
         `
     );
 });
 
 //About
+
+addSlide(
+    "about", 
+    "text-slide slide--alt",
+    `
+    <p class="eyebrow">${ABOUT.eyebrow}</p>
+    <h2>${ABOUT.heading}</h2>
+    ${ABOUT.paragraphs.map((p) => `<p>${p}</p>`).join("")}
+    `
+);
 
 addSlide(
     "contact",
@@ -116,7 +191,7 @@ addSlide(
 const observer = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
-            entry.target.classList.toogle("is-visible", entry.isIntersecting);
+            entry.target.classList.toggle("is-visible", entry.isIntersecting);
         });
     },
     {threshold: 0.25}
@@ -126,13 +201,13 @@ slideRefs.forEach((s) => observer.observe(s));
 
 slideRefs.forEach((s, i) => {
     const btn = document.createElement("button");
-    btn.setAttribute("click", () => {
+    btn.addEventListener("click", () => {
         s.scrollIntoView({behavior: "smooth"});
     });
-    dotsEL.appendChild(btn);
+    dotsEl.appendChild(btn);
 });
 
-const dotButtons = Array.from(dotsEL.children);
+const dotButtons = Array.from(dotsEl.children);
 
 const activeObserver = new IntersectionObserver(
     (entries) => {
