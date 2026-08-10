@@ -82,60 +82,54 @@ $: every(6,
     tags: ["ambient"],
     description: "",
     code: `setcpm(75 / 4)
- 
-    stack(
-    // Drums
-    sound("bd ~ ~ bd bd ~ sd ~ ~")
-        .bank("RolandTR909")
-        .gain("< 0 0.025 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.03 0.00 >")
-        .room(0.15),
-    sound("~ hh ~ hh ~ hh hh ~ hh hh ~")
-        .bank("RolandTR909")
-        .gain("< 0 0.083 0.167 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.167 0.083 0>")
-        .hpf(9000)
-        .sometimes(x => x.gain(0.15)),
-    sound("~ ~ ~ ~ ~ cp ~ ~")
-        .bank("RolandTR909")
-        .gain(0.35)
-        .room(0.3)
-        .mask("<0 0 0 1>/4"),
-    // Bajo
-    note("<eb2 bb1 f2 g1>/2")
-        .s("sawtooth")
-        .lpf(200)
-        .gain("<0 0.15 0.275 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.25 0>"),
-    note(\`
-        [eb3 g3 bb3 d4] 
-        [bb3 d4 f4 a4] 
-        [f3 a3 c4 e4] 
-        [g3 bb3 d4 f4]
-    >/4\`)
-        .s("gm_pad_2")
-        .gain(0.36)
-        .room(0.55)
-        .lpf(sine.range(900, 2000).slow(12))
-        .delay(0.2),
-    // Piano
-    note("eb3 g3 bb3 bb3 d4 f4 f3 c4 g3 bb3 d4")
-        .s("piano")
-        .gain("<0 0.133 0.267 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 00>")
-        .lpf(sine.range(800, 2200).slow(8))
-        .slow(2),
-    // Melodía
-    note("<bb4 d5 f5 eb5 d5 bb4 f4 eb4>/2")
-        .s("triangle")
-        .gain(0.4)
-        .delay(0.3)
-        .lpf(2000)
-    )`,
-    }
+stack(
+  // Drums
+  sound("bd ~ ~ bd bd ~ sd ~ ~")
+    .bank("RolandTR909")
+    .gain("<0 0.025 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.05 0.03 0.00>")
+    .room(0.15),
+  sound("~ hh ~ hh ~ hh hh ~ hh hh ~")
+    .bank("RolandTR909")
+    .gain("<0 0.083 0.167 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.250 0.167 0.083 0>")
+    .hpf(9000)
+    .sometimes(x => x.gain(0.15)),
+  sound("~ ~ ~ ~ ~ cp ~ ~")
+    .bank("RolandTR909")
+    .gain(0.35)
+    .room(0.3)
+    .mask("<0 0 0 1>/4"),
+  // Bajo
+  note("<eb2 bb1 f2 g1>/2")
+    .s("sawtooth")
+    .lpf(200)
+    .gain("<0 0.15 0.275 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.55 0.25 0>"),
+  note("<[eb3 g3 bb3 d4] [bb3 d4 f4 a4] [f3 a3 c4 e4] [g3 bb3 d4 f4]>/4")
+    .s("gm_pad_2")
+    .gain(0.36)
+    .room(0.55)
+    .lpf(sine.range(900, 2000).slow(12))
+    .delay(0.2),
+  // Piano
+  note("eb3 g3 bb3 bb3 d4 f4 f3 c4 g3 bb3 d4")
+    .s("piano")
+    .gain("<0 0.133 0.267 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0>")
+    .lpf(sine.range(800, 2200).slow(8))
+    .slow(2),
+  // Melodía
+  note("<bb4 d5 f5 eb5 d5 bb4 f4 eb4>/2")
+    .s("triangle")
+    .gain(0.4)
+    .delay(0.3)
+    .lpf(2000)
+)`,
+  },
 ];
 
 const ABOUT = {
   eyebrow: "About",
   heading: "On writing music as code",
   paragraphs: [
-    "Hii! My name is Asier. I'm a 15 year old teenager who loves everything related to programming. This time through Hack Club I got into Ariam an awesome YSWS where I had to create songs with Strudel.cc. It has definitely been a great challenge to work on since my experience with music is null. But isn't that what life is about? Being challenged to push further. Compared to other Ariam submissions my work won't seem anything spectacular. Still I'm proud of what I accomplished for this YSWS.",
+    "Hi! My name is Asier. I'm a 15 year old teenager who loves everything related to programming. This time through Hack Club I got into Ariam an awesome YSWS where I had to create songs with Strudel.cc. It has definitely been a great challenge to work on since my experience with music is null. But isn't that what life is about? Being challenged to push further. Compared to other Ariam submissions my work won't seem anything spectacular. Still I'm proud of what I accomplished for this YSWS.",
   ],
 };
 
@@ -173,7 +167,7 @@ addSlide(
   "intro",
   "intro",
   `
-  <p class="eyebrow">My work for Aria, a HackClub YSWS.</p>
+  <p class="eyebrow">My work for Ariam</p>
   <h1>${ARTIST.name}<span class="cursor">&nbsp;</span></h1>
   <p>${ARTIST.tagline}</p>
   <p class="scroll-hint">Scroll to see more</p>
