@@ -421,10 +421,10 @@ stack(
 
     // EMPTY VAR ^^
 
-    const empty = note(`
+    const empty = note("
       - - - -
       - - - -
-    `)
+    ")
 
 
     // ARANGES 
