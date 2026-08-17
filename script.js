@@ -123,6 +123,332 @@ stack(
     .lpf(2000)
 )`,
   },
+  {
+    number: "03",
+    title: "Megalovania Remix",
+    year: "2026",
+    tags: ["Remix"],
+    description: "Just a try to recreate this iconic song!!",
+    code:`// Data
+    //@by Asier
+    //@title Megalovania remix
+
+    setcpm(120/4)
+
+    // Instruments -----------------------------------------------------------------------------
+
+    const bassSound = (pat) => note(pat)
+      .s("sawtooth")
+      .gain(0.7)
+      .room(0.1)
+      .lpf(500)
+
+    const lead = (pat) => note(pat)
+      .s("sawtooth")
+      .room(0.1)
+      .lpf(20000)
+      .lpq(4)
+      .decay(10)
+      .sustain(0.1)
+      .gain(0.7)
+
+    // RIFFS ---------------------------------------------------------------------------------------
+
+    const riff1 = lead("
+      [d4 d4] d5 a4 ~
+      [gs4 g4] f4
+      [d4 f4] g4
+    ")
+
+    const riffA = lead("
+      [c4 c4] d5 a4 ~
+      [gs4 g4] f4
+      [d4 f4] g4
+    )
+
+    const riffB = lead("
+      [b3 b3] d5 a4 ~
+      [gs4 g4] f4
+      [d4 f4] g4
+    ")
+
+    const riffC = lead("
+      [bb3 bb3] d5 a4 ~
+      [gs4 g4] f4
+      [d4 f4] g4
+    ")
+
+    const mainRiff = cat(riff1, riffA, riffB, riffC)
+
+    // BASS ----------------------------------------------------------------------------------------
+
+    const mainBass = bassSound("<
+      [d2 d2] [d2 d2]
+      [c2 c2] [c2 c2]
+      [b1 b1] [b1 b1]
+      [bb1 bb1] [bb1 bb1]
+    >*4")
+
+    const bassIntense = bassSound("<
+      d2*4
+      c2*4
+      b1*4
+      bb1*4
+    >")
+
+    // DRUMS ---------------------------------------------------------------------------------------
+
+    const softdrums = s("bd*4, [ - sd]*2, hh*8") // Mirar despues sd
+      .bank("rolandjd990").room(0.35).gain(0.65)
+
+    const fulldrums = s("bd*4, sd*2, hh*8")
+      .bank("rolandjd990").room(0.3).gain(0.7)
+
+    const hardDrums = s("bd*4, sd*2, hh*8, [ - cp]*2")
+      .bank("rolandjd990").room(0.3).gain(0.85)
+
+    const anotherDrumWhyNot = s("bd*8, sd*4, hh*16")
+      .bank("rolandjd990").room(0.25).gain(0.75)
+
+    // PADS -----------------------------------------------------------------------------------------
+
+    const pads = chord("Dm C Bb A")
+      .voicing()
+      .s("gm_synth_strings_1")
+      .gain(0.65)
+      .room(0.5)
+      .lpf(1300)
+
+    // MID PART ----------------------------------------------------------------------
+
+    const midRiff = lead("
+      f4 f4 f4 f4 f4
+      d4 d4
+      f4 f4 f4 g4 gs4
+      g4 f4 d4 f4 g4
+      f4 f4 f4 g4 gs4 a4 c5 a4
+      d5 d5 d5 a4 d5 c5
+      ")
+
+    // Arrange --------------------------------------------------------------------------------------
+
+    arrange (
+      [5, stack(mainBass.gain("<0.1 0.2 0.4 0.6 0.9>"))],
+      [4, stack(mainBass, mainRiff)],
+      [4, stack(mainBass, mainRiff, softdrums)],
+      [4, stack(mainBass, mainRiff, softdrums, pads)],
+      [2, stack(bassIntense, midRiff, fulldrums)],
+      [4, stack(bassIntense, mainRiff, hardDrums, pads)],
+      [2, stack(bassIntense, mainRiff.fast(1.15), anotherDrumWhyNot)],
+      [4, stack(bassIntense, mainRiff, pads, hardDrums)],
+      [2, stack(mainBass.gain(0.6), mainRiff.gain(0.6))],
+      [4, stack(bassIntense, mainRiff, softdrums)],
+      [4, stack(mainBass.gain("<0.8 0.6 0.4 0.0>"), mainRiff.gain("<0.9 0.7 0.5 0.1>"))]
+    )`
+  },
+  {
+    number: "04",
+    title: "Flame",
+    year: "2026",
+    tags: ["Joke song"],
+    description: "What could I say, just a project I didnt expect to submit on the beginning",
+    code:`//DATA
+//@by Asier
+//@title FLAME
+setcpm(120/3)
+
+
+// CONSTS
+
+const ROOM = 0.35
+//DRUMS
+
+const hit = (pat) => s(pat)
+  .s("akaixr10_bd")
+  .lpf(2000)
+  .room(ROOM)
+
+const hit1 = hit("
+  bd bd bd bd,
+  bd bd [bd bd] -
+")
+  .gain(0.2)
+
+const hit2 = hit("
+  bd bd bd bd,
+  bd bd [bd -] -,
+  - hh - hh
+")
+  .gain(0.2)
+
+const hit3 = hit("
+  bd bd bd bd,
+  bd bd - [bd bd],
+  - hh - hh
+")
+  .gain(0.2)
+
+const hit4 = hit("
+  bd bd bd bd,
+  bd bd [bd -] bd
+")
+  .gain(0.35)
+
+const hit5 = hit("
+  bd bd [bd bd] bd
+  bd [bd bd] bd [bd -]
+")
+
+
+const hit6 = hit("
+  bd - bd - bd 
+  bd bd - [bd, hh]
+")
+
+const hats = s("
+  hh*2
+"
+  .s("d110_hh")
+  .room(ROOM)
+  .gain("<0.03 0.02 0.03 0.015>".fast(0.2))
+  .release(0.4)
+  .pan(sine.range(0.3, 0.7).slow(4))
+
+const hats3 = s("
+  hh*4
+").s("d110_hh")
+  .room(ROOM)
+  .gain("<0.03 0.02 0.03 0.015>".fast(0.2))
+  .release(0.4)
+  .pan(sine.range(0.3, 0.7).slow(4))
+
+const hats2 = s("
+  [hh - hh] [hh hh]*1
+").s("d110_hh")
+  .gain(0.02)
+  .pan(sine.range(0.8, 0.3).slow(6))
+
+
+const moreeffects = hit("
+  bd*3
+")
+
+const percs = s("
+  - cp - [cp -]
+  - - cp -
+")
+  .s("akaixr10_bd")
+  .gain(0.4)
+  .room(ROOM)
+const riser = hit("
+  bd*8
+").gain("<0.5 0.8 1.2 1.5>")
+  .lpf("<500 500 3000 5000>")
+
+
+// BASS (now an actual bass not those drums I called bass :sad)
+
+
+const sub = note("
+  c2 - - - 
+  c2 - c2 -
+")
+  .s("sine")
+  .lpf("<120 150 180 220 260>")
+  .gain(0.65)
+  .attack(0.1)
+  .decay(0.15)
+  .sustain("<0.3 0.3 0.5 0.5>")
+  .release(0.1)
+  
+  
+
+const mainbass = note("
+  - c2 - g1
+  c2 - eb2 g1
+")
+  .s("gm_acoustic_bass")
+  .lpf(800)
+  .gain(0.4)
+  .release(0.12)
+
+const bassVariant = note("
+  g1 g1 - eb2
+  - c2 - c2
+")
+  .s("gm_acoustic_bass")
+  .lpf(1000)
+  .gain(0.35)
+  .release(0.2)
+
+// LEADS
+
+const lead = note("
+  - c4 - eb4
+  g4 - eb4 -
+")
+  .s("sawtooth")
+  .lpf(1800)
+  .resonance("<2 4 8 12>")
+  .release(0.2)
+  .room(ROOM)
+  .pan(0.3)
+
+
+const lead2 = note("
+  - g4 - bb4
+  g4 eb4 - c4
+")
+  .s("sawtooth")
+  .lpf(3000)
+  .release(0.15)
+  .room(ROOM)
+  .pan(0.7)
+
+const leadVariant = note("
+  eb5 g4 bb4 -
+  g4 eb5 c4 eb4
+")
+  .s("supersaw")
+  .lpf(2400)
+  .release(0.1)
+  .delay(0.25)
+  .delaytime(0.18)
+  .delayfeedback(0.3)
+  .room(ROOM)
+  .pan(0.5)
+
+
+// EMPTY VAR ^^
+
+const empty = note(`
+  - - - -
+  - - - -
+`)
+
+
+// ARANGES 
+
+const leadloop = cat(lead, lead2)
+const leadloopempty = cat(leadVariant, empty)
+const hitloop = cat(hit3, hit3, hit5, hit3)
+const hatsloop = cat(hats, hats3)
+
+arrange(
+  [4, stack(hitloop.gain("<0.05 0.1 0.18 0.3>").lpf("<600 650 750 700>"), sub.gain("<0 0.3>"))],
+  [3, stack(hit4, sub, mainbass, percs).lpf("<400 1000 2000>")],
+  [2, stack(hit5, sub, mainbass, hatsloop)],
+  [2, stack(hit5, sub, mainbass, bassVariant, hats2, hats3)],
+  [2, stack(sub.gain(0.3), moreeffects, hats, lead.room(0.6).lpf("<3000 2300>"))],
+  [2, stack(hit5, sub, mainbass, hats3, leadloop)],
+  [1, stack(hit6, sub, mainbass, hats3, lead2)],
+  [1, stack(hit5, sub, mainbass, lead2 )],
+  [3, stack(hit5, riser, hatsloop.gain(0.3))],
+  [2, stack(hit6, sub, mainbass, bassVariant, leadVariant).gain("<0.85 1>").lpf(2500)],
+  [4, stack(hit3, mainbass, leadloop)],
+  [5, stack(hit3.gain("<0.8 0.4 0.3 0.2 0.1 0>"), sub.gain("<0.8 0.4 0.3 0.2 0.1 0>"), mainbass.gain("<0.8 0.4 0.3 0.2 0 0>"), leadloopempty.gain("<0.8 0.4 0.2 0 0 0>"))]
+)`
+  },
 ];
 
 const ABOUT = {
